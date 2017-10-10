@@ -1,36 +1,93 @@
 "use strict";
-var express= require('express');
-var app= express();
-var bodyParser= require('body-parser');
+var express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
-app.use(bodyParser.urlencoded({extended:true}));
+
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
 
-var campgrounds=[
-    {name:"Salmon Reek",img:"https://farm5.staticflickr.com/4137/4812576807_8ba9255f38.jpg"},
-    {name:"Amazing Trek",img:"https://farm3.staticflickr.com/2259/2182093741_164dc44a24.jpg"},
-    {name:"Cool Mountains",img:"https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg"},
-]
+var campgroundsSchema = new mongoose.Schema({
+    name: String,
+    img: String,
+    desc:String
+});
+
+var Campground = mongoose.model("Campground", campgroundsSchema);
+
+// // Create demo data
+// Campground.create({
+//     name: "Cool Mountains",
+//     img: "https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg",
+//     desc:"Camp in the Alaskan Mountains, Away from the summer heat. Washrooms and food to be provdided. Happy Camping!!"
+// }, function (err, campground) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Campground Created");
+//     }
+// })
+
 
 app.get('/', function (req, res) {
     res.render("landing");
 });
 
+//INDEX
 app.get("/campgrounds", function (req, res) {
 
+    Campground.find(function (err, allCampgrounds) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render("index", {campgrounds: allCampgrounds});
+        }
+    });
 
-    res.render("campgrounds",{campgrounds:campgrounds});
 })
 
+//CREATE
 app.post("/campgrounds", function (req, res) {
-    campgrounds.push(req.body);
-    console.log(campgrounds);
+    var name= req.body.name;
+    var img= req.body.img;
+    var desc= req.body.desc;
+
+    var newCampground={
+        name:name,
+        img:img,
+        desc:desc
+    }
+    Campground.create(newCampground, function (err, campground) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Campground Created");
+        }
+    })
     res.redirect("/campgrounds");
 })
 
+//NEW
 app.get("/campgrounds/new", function (req, res) {
     res.render("new");
+})
+
+//SHOW
+app.get("/campgrounds/:id", function (req, res) {
+    var id= req.params.id;
+    Campground.findById(id,function (err, camp) {
+        if(err){
+            console.log(err);
+        }else{
+            res.render("show",{camp:camp});
+        }
+    });
+
 })
 
 
