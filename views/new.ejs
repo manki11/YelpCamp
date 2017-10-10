@@ -1,15 +1,27 @@
-<% include partials/header.ejs%>
-<h1>Add new Campground here:</h1>
+<% include partials/header.ejs %>
 
-<form method="post" action="/campgrounds">
-    <input name="name" type="text" placeholder="name">
-    <input name="img" type="url" placeholder="img">
+<div class="container">
+    <div class="row ">
+        <h1 style="text-align: center">Add new Campground here:</h1>
+        <div style="margin: 50px auto; width: 40%">
+        <form method="post" action="/campgrounds">
+            <div class="form-group">
+                <input class="form-control" name="name" type="text" placeholder="name">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="img" type="url" placeholder="img">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
+            </div>
 
-    <button type="submit">Submit</button>
 
-</form>
+        </form>
+            <a href="/campgrounds">Go back</a>
 
-<a href="/campgrounds">Go back</a>
+        </div>
+    </div>
+</div>
 
 
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>

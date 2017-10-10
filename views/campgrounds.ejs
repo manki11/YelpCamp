@@ -1,17 +1,40 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
 
 
-<h1>This is campgrounds</h1>
 
-<a href="/campgrounds/new">Make new campground</a>
+<div class="container">
+
+    <header class="jumbotron text-center">
+        <div class="container">
+            <h1>Welcome to campgrounds!</h1>
+            <p>View the best campgroudns from all over the world</p>
+
+            <p>
+                <a class="btn btn-lg btn-primary" href="/campgrounds/new">Make new campground</a>
+            </p>
+
+        </div>
+
+    </header>
 
 
-<% campgrounds.forEach(function (camp) { %>
-<div>
-    <p><%= camp.name%></p>
-    <img src="<%= camp.img%>">
+    <div class="row text-center">
+
+    <% campgrounds.forEach(function (camp) { %>
+    <div class="col-md-4 col-sm-6">
+
+        <div class="thumbnail">
+            <img src="<%= camp.img %>">
+            <div class="caption">
+                <p><%= camp.name %></p>
+            </div>
+        </div>
+
+    </div>
+    <% }) %>
+
+    </div>
+
 </div>
-<%})%>
 
-
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>
