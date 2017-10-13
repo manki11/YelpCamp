@@ -1,0 +1,27 @@
+<% include ../partials/header.ejs %>
+
+<div class="container">
+    <div class="row ">
+        <h1 style="text-align: center">Login for YelpCamp</h1>
+        <div style="margin: 50px auto; width: 40%">
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <input class="form-control" name="username" type="text" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" name="password" type="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
+                </div>
+
+
+            </form>
+            <a href="/campgrounds">Go back</a>
+
+        </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer.ejs %>

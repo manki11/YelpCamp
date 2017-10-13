@@ -135,8 +135,9 @@ app.post("/campgrounds/:id/comments", function (req, res) {
 // AUTH ROUTES
 // ==============
 
+//REGISTER
 app.get("/register", function (req, res) {
-    res.render("register");
+    res.render("auth/register");
 });
 
 app.post("/register",function (req, res) {
@@ -151,6 +152,17 @@ app.post("/register",function (req, res) {
    });
 });
 
+//LOGIN
+app.get("/login", function (req, res) {
+    res.render("auth/login");
+});
+
+app.post("/login",passport.authenticate("local",{
+    successRedirect:"/campgrounds",
+    failureRedirect:"/login"
+}) ,function (req, res) {
+
+})
 
 
 
