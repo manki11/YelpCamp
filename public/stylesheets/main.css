@@ -9,3 +9,13 @@
 .thumbnail .caption{
     padding: 10px;
 }
+
+#deleteform{
+    display: inline;
+}
+
+.edbtn{
+    padding: 5px 10px;
+    margin-right:20px;
+}
+
