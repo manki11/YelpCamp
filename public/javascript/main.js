@@ -19,6 +19,7 @@ $(document).ready(function() {
         $parent.find('p.message').hide(); // use slide methods fancy show/hide are required
         $parent.find('form.editForm').show();
         $(this).hide();
+        $(".delete-form").hide();
         // Not sure but you'd want to hide <a href="#">Edit link </a> after clicking
         // in that case use the below
         // $(this).hide();

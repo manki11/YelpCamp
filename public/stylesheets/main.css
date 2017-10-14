@@ -27,3 +27,7 @@
     display: inline;
     margin-left: 20px;
 }
+
+.login_button{
+    margin: 0px auto;
+}

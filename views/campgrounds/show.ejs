@@ -34,6 +34,7 @@
                 <!--<div class="text-right">-->
                 <!--<a class="btn btn-success" href="/campgrounds/<%= camp._id %>/comments/new">Post Comments</a>-->
                 <!--</div>-->
+                <% if(currentUser){ %>
                 <form class="comment-form" method="post" action="/campgrounds/<%= camp._id %>/comments">
                     <div class="form-group">
                         <textarea class="form-control" name="comment[text]" type="text"
@@ -41,27 +42,34 @@
                     </div>
                     <button class="btn btn-lg btn-success btn-sm" type="submit">Submit</button>
                 </form>
-                    <hr>
-                    <% camp.comments.forEach(function (comment) { %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong>
-                            <span class="pull-right">10 days ago</span>
-                            <p class="message"><%= comment.text %></p>
-                            <form class="editForm" style="display: none" method="post" action="/campgrounds/<%= camp._id%>/comments/<%= comment._id%>?_method=PUT">
-                                <br/>
-                                <textarea rows="2" class="editMessage form-control" name="comment[text]"><%= comment.text%></textarea>
-                                <br/>
-                                <input class="btn btn-success btn-sm" type="submit" value="Save">
-                            </form>
-                            <button class="btn btn-warning btn-xs edit-link">Edit</button>
-                            <form class="delete-form" action="/campgrounds/<%= camp._id%>/comments/<%= comment._id%>?_method=DELETE" method="post">
-                                <button class="btn btn-danger btn-xs">Delete</button>
-                            </form>
-                        </div>
+                <% }else{ %>
+                <a class="btn btn-primary btn-lg login_button btn-block" href="/login">Login to add Comments</a>
+                <% } %>
+                <hr>
+                <% camp.comments.forEach(function (comment) { %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right">10 days ago</span>
+                        <p class="message"><%= comment.text %></p>
+                        <form class="editForm" style="display: none" method="post"
+                              action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=PUT">
+                            <br/>
+                            <textarea rows="2" class="editMessage form-control"
+                                      name="comment[text]"><%= comment.text %></textarea>
+                            <br/>
+                            <input class="btn btn-success btn-sm" type="submit" value="Save">
+                        </form>
+                        <button class="btn btn-warning btn-xs edit-link">Edit</button>
+                        <form class="delete-form"
+                              action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=DELETE"
+                              method="post">
+                            <button class="btn btn-danger btn-xs">Delete</button>
+                        </form>
                     </div>
-                    <hr>
-                    <% }) %>
+                </div>
+                <hr>
+                <% }) %>
             </div>
 
 

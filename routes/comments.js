@@ -58,8 +58,14 @@ router.put("/:comm_id", function (req, res) {
 });
 
 router.delete("/:comm_id", function (req, res) {
-
-})
+    Comment.findByIdAndRemove(req.params.comm_id, function (err) {
+        if(err){
+            res.redirect("back");
+        }else{
+            res.redirect("back");
+        }
+    });
+});
 
 function checkCommentOwnership(req,res,next) {
     if(req.isAuthenticated()){
