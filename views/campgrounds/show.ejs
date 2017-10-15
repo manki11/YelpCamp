@@ -55,6 +55,7 @@
                         <div>
                         <p class="message para-inline"><%= comment.text %></p>
                         <form class="delete-form pull-right" action="/campgrounds/<%=camp._id%>/comments/<%=comment._id%>/like" method="post">
+                            <p style="display: inline"><%=comment.likes.length%> People Like this</p>
                             <button class="button-link">
                                 <%if(currentUser && comment.likes.indexOf(currentUser._id)!=-1){%>Liked<%}else{%>Like<%}%>
                             </button>

@@ -1,6 +1,7 @@
 "use strict";
 var express= require("express"),
-    Campground= require("../models/campgrounds");
+    Campground= require("../models/campgrounds"),
+    Comment= require("../models/comments");
 var router= express.Router();
 
 //INDEX
@@ -82,8 +83,26 @@ router.put("/:id",checkCampgroundOwnership ,function (req, res) {
 
 //DELETE
 router.delete("/:id", checkCampgroundOwnership ,function (req, res) {
-    Campground.findByIdAndRemove(req.params.id,function (err) {
-        res.redirect("/campgrounds");
+    Campground.findById(req.params.id,function (err, camp) {
+        Comment.remove({
+            _id: {
+                $in: camp.comments
+            }
+        }, function(err) {
+            if(err) {
+                // req.flash('error', err.message);
+                res.redirect('/');
+            } else {
+                camp.remove(function(err) {
+                    if(err) {
+                        // req.flash('error', err.message);
+                        return res.redirect('/');
+                    }
+                    // req.flash('error', 'Campground deleted!');
+                    res.redirect('/campgrounds');
+                });
+            }
+        });
     });
 });
 
