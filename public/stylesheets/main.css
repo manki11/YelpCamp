@@ -48,3 +48,19 @@
 .para-inline{
     display: inline;
 }
+
+.ed-comm{
+    margin-top: 10px;
+}
+
+.ed-comm:hover,.ed-camp:hover{
+    background-color: #ffffff;
+    color: #000000;
+    border: solid 1px #000000;
+}
+
+.ed-camp,.ed-comm{
+    background-color: #eeeeee;
+    color: #000000;
+    border: solid 1px #000000;
+}
