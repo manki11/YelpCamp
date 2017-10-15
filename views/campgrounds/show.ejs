@@ -51,7 +51,16 @@
                     <div class="col-md-12">
                         <strong><%= comment.author.username %></strong>
                         <span class="pull-right">10 days ago</span>
-                        <p class="message"><%= comment.text %></p>
+
+                        <div>
+                        <p class="message para-inline"><%= comment.text %></p>
+                        <form class="delete-form pull-right" action="/campgrounds/<%=camp._id%>/comments/<%=comment._id%>/like" method="post">
+                            <button class="button-link">
+                                <%if(currentUser && comment.likes.indexOf(currentUser._id)!=-1){%>Liked<%}else{%>Like<%}%>
+                            </button>
+                        </form>
+                        </div>
+
                         <form class="editForm" style="display: none" method="post"
                               action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=PUT">
                             <br/>
@@ -60,12 +69,15 @@
                             <br/>
                             <input class="btn btn-success btn-sm" type="submit" value="Save">
                         </form>
+
+                        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                         <button class="btn btn-warning btn-xs edit-link">Edit</button>
                         <form class="delete-form"
                               action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=DELETE"
                               method="post">
                             <button class="btn btn-danger btn-xs">Delete</button>
                         </form>
+                        <%}%>
                     </div>
                 </div>
                 <hr>

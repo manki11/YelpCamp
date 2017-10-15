@@ -31,3 +31,20 @@
 .login_button{
     margin: 0px auto;
 }
+
+.button-link {
+    outline: none;
+    padding: 5px;
+    border: 0px;
+    color: #23527c;
+    background-color: transparent;
+}
+
+.button-link:focus,
+.button-link:hover {
+    color: #23227c;
+}
+
+.para-inline{
+    display: inline;
+}

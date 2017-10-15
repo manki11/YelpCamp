@@ -1,6 +1,7 @@
 "use strict";
 var express= require("express"),
     Campground= require("../models/campgrounds"),
+    User= require("../models/user"),
     Comment= require("../models/comments");
 var router= express.Router({mergeParams:true});
 
@@ -48,7 +49,8 @@ router.post("/",isLoggedIn ,function (req, res) {
     });
 });
 
-router.put("/:comm_id", function (req, res) {
+//comment edit
+router.put("/:comm_id", checkCommentOwnership,function (req, res) {
     Comment.findByIdAndUpdate(req.params.comm_id, req.body.comment, function (err, updatedComment) {
         if(err){
             return res.redirect("back");
@@ -57,7 +59,8 @@ router.put("/:comm_id", function (req, res) {
     });
 });
 
-router.delete("/:comm_id", function (req, res) {
+//comment delete
+router.delete("/:comm_id", checkCommentOwnership,function (req, res) {
     Comment.findByIdAndRemove(req.params.comm_id, function (err) {
         if(err){
             res.redirect("back");
@@ -67,14 +70,40 @@ router.delete("/:comm_id", function (req, res) {
     });
 });
 
+//comment like
+router.post("/:comm_id/like",isLoggedIn, function (req, res) {
+    Comment.findById(req.params.comm_id, function (err, comment) {
+        console.log(comment);
+        
+       if(err){
+           console.log(err);
+           res.redirect("back");
+       } else{
+           User.findById(req.user._id, function (err, user) {
+               console.log("found user"+user);
+               comment.likes.push(user);
+
+               comment.save(function (err, comment) {
+                   if(err){
+                       console.log(err);
+                   }else{
+                       console.log(comment);
+                       res.redirect("back");
+                   }
+               });
+           });
+       }
+    });
+});
+
 function checkCommentOwnership(req,res,next) {
     if(req.isAuthenticated()){
-        Comment.findById(req.params.id, function (err, camp) {
+        Comment.findById(req.params.comm_id, function (err, comment) {
             if(err){
                 console.log(err);
                 return res.redirect("back");
             }else{
-                if(camp.author.id.equals(req.user._id)){
+                if(comment.author.id.equals(req.user._id)){
                     next();
                 }else{
                     res.redirect("back");
