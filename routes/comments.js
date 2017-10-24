@@ -79,28 +79,47 @@ router.post("/:comm_id/like",middleware.isLoggedIn, function (req, res) {
     Comment.findById(req.params.comm_id, function (err, comment) {
         console.log(comment);
         if(err){
-           console.log(err);
-           res.redirect("back");
-       }else{
-           User.findById(req.user._id, function (err, user) {
-               console.log("found user"+user);
-               comment.likes.push(user);
+            console.log(err);
+            res.redirect("back");
+        }else{
+            User.findById(req.user._id, function (err, user) {
+                console.log("found user"+user);
+                comment.likes.push(user);
 
-               comment.save(function (err, comment) {
-                   if(err){
-                       console.log(err);
-                   }else{
-                       console.log(comment);
-                       // res.redirect("back");
-                       res.send({success:'1', likes: comment.likes.length});
-                   }
-               });
-           });
-       }
+                comment.save(function (err, comment) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log(comment);
+                        // res.redirect("back");
+                        res.send({success:'1', likes: comment.likes.length});
+                    }
+                });
+            });
+        }
     });
 });
 
 //comment Unlike
+router.post("/:comm_id/unlike",middleware.isLoggedIn, function (req, res) {
+    Comment.update(
+        { "_id": req.params.comm_id},
+        { "$pull": { "likes": req.user._id} },
+        function (err, result){
+            if (err) throw err;
+            console.log(result);
+            Comment.findById(req.params.comm_id, function (err, comment) {
+                console.log(comment);
+                if(err){
+                    console.log(err);
+                    res.redirect("back");
+                }else{
+                    res.send({success:'1',likes: comment.likes.length});
+                }
+            });
+        }
+    );
+});
 
 
 

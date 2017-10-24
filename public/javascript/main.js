@@ -55,4 +55,27 @@ $(document).ready(function() {
         });
     });
 
+    $(".unlikeComment").on("click", function (e) {
+        var $parent= $(this).parent();
+        var $grandParent= $parent.parent();
+        var noOfLikes= $grandParent.find('span.noOfLikes');
+
+        var likeElement= $parent.find('a.likeComment');
+        var unlikeElement= $(this);
+
+        unlikeElement.hide();
+        likeElement.show();
+
+        var commId= $(this).attr('data-commId');
+
+        $.post(window.location.pathname+"/comments/"+commId+"/unlike", function (data) {
+            if(data.success !== '1') {
+                unlikeElement.show();
+                likeElement.hide();
+            }else{
+                noOfLikes.html(data.likes);
+            }
+        });
+    });
+
 });
