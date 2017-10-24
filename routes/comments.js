@@ -91,13 +91,16 @@ router.post("/:comm_id/like",middleware.isLoggedIn, function (req, res) {
                        console.log(err);
                    }else{
                        console.log(comment);
-                       res.redirect("back");
+                       // res.redirect("back");
+                       res.send({success:'1', likes: comment.likes.length});
                    }
                });
            });
        }
     });
 });
+
+//comment Unlike
 
 
 

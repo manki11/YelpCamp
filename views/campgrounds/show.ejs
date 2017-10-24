@@ -1,7 +1,7 @@
 <% include ../partials/header.ejs %>
 
 <script>
-    var camp = <%- camp%>;
+    var camp = <%- camp %>;
 </script>
 
 
@@ -19,7 +19,7 @@
             <div class="thumbnail">
                 <img class="image-responsive" src="<%= camp.img %>">
                 <div class="caption">
-                    <h4 class="pull-right">$<%= camp.price%>/night</h4>
+                    <h4 class="pull-right">$<%= camp.price %>/night</h4>
                     <h4><a><%= camp.name %></a></h4>
 
                     <div>
@@ -31,9 +31,9 @@
                                 <button class="btn btn-danger btn-xs ed-camp" type="submit">DELETE</button>
                             </form>
                         </div>
-                    <br/>
+                        <br/>
 
-                    <% } %>
+                        <% } %>
                     </div>
                     <br/>
                     <p><%- camp.desc %></p>
@@ -64,18 +64,40 @@
 
                         <div>
                             <p class="message para-inline"><%= comment.text %></p>
-                            <form class="delete-form pull-right"
-                                  action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/like" method="post">
-                                <p style="display: inline"><%= comment.likes.length %> People Like this</p>
-                                <button class="button-link">
+                            <!--<form class="delete-form pull-right"-->
+                            <!--action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/like" method="post">-->
+                            <!--<p style="display: inline"><%= comment.likes.length %> People Like this</p>-->
+                            <!--<button class="button-link">-->
+                            <!--<% if(currentUser && comment.likes.indexOf(currentUser._id) != -1){ %>-->
+                            <!--Unlike-->
+                            <!--<% }else{ %>-->
+                            <!--Like-->
+                            <!--<% } %>-->
+                            <!--</button>-->
+                            <!--</button>-->
+                            <!--</form>-->
+
+                            <div class="delete-form pull-right">
+                                <p style="display: inline;"><span class="noOfLikes"><%= comment.likes.length %></span> People Like this</p>
+                                <div style="display: inline" class="button-link">
                                     <% if(currentUser && comment.likes.indexOf(currentUser._id) != -1){ %>
-                                    Liked
+                                    <a class="unlikeComment" data-commId="<%= comment._id %>"
+                                       style="cursor: pointer; text-decoration: none">Unlike</a>
+
+                                    <a class="likeComment" data-commId="<%= comment._id %>"
+                                       style="cursor: pointer; text-decoration: none; display: none">Like</a>
+
                                     <% }else{ %>
-                                    Like
+                                    <a class="likeComment" data-commId="<%= comment._id %>"
+                                       style="cursor: pointer; text-decoration: none">Like</a>
+
+                                    <a class="unlikeComment" data-commId="<%= comment._id %>"
+                                       style="cursor: pointer; text-decoration: none; display: none">Unlike</a>
+
                                     <% } %>
-                                </button>
-                                </button>
-                            </form>
+                                </div>
+                            </div>
+
                         </div>
 
                         <form class="editForm" style="display: none" method="post"
