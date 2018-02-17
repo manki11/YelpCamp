@@ -7,10 +7,7 @@ var express = require('express'),
     override=require('method-override'),
     LocalStrategy= require('passport-local'),
     User= require('./models/user'),
-    Campground= require("./models/campgrounds"),
-    Comment= require("./models/comments"),
-    connectFlash= require("connect-flash"),
-    seedDB= require("./seedDB");
+    connectFlash= require("connect-flash");
 
 var campgroundRoutes= require("./routes/campgrounds"),
     commentRoutes= require("./routes/comments"),

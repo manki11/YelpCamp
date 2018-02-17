@@ -1,5 +1,9 @@
 # YelpCamp #
 
+<a href="https://codeclimate.com/github/manki11/YelpCamp/maintainability"><img src="https://api.codeclimate.com/v1/badges/0ca134b672b21e78bf54/maintainability" /></a>
+
+[![CodeFactor](https://www.codefactor.io/repository/github/manki11/yelpcamp/badge)](https://www.codefactor.io/repository/github/manki11/yelpcamp)
+
 #### A Camp review site ####
 
 A site in which a user can signup/login and review his expiriences at hotels or other adventures!!
