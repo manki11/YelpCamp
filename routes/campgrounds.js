@@ -37,10 +37,10 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
         author:author,
         price:price
     };
-    
+
     console.log(newCampground);
-    
-    
+
+
     Campground.create(newCampground, function (err, campground) {
         if (err) {
             console.log(err);

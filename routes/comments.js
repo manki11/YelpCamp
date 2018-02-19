@@ -7,7 +7,7 @@ var express= require("express"),
 var router= express.Router({mergeParams:true});
 
 
-//caomments new
+//comments new
 router.get("/new",middleware.isLoggedIn, function (req, res) {
     Campground.findById(req.params.id, function (err, campground) {
         if(err){
@@ -120,7 +120,5 @@ router.post("/:comm_id/unlike",middleware.isLoggedIn, function (req, res) {
         }
     );
 });
-
-
 
 module.exports= router;
