@@ -7,14 +7,23 @@ var router= express.Router();
 
 //INDEX
 router.get("/", function (req, res) {
-
-    Campground.find(function (err, allCampgrounds) {
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/index", {campgrounds: allCampgrounds});
-        }
-    });
+    if(req.query.search){
+        Campground.find({$text: {$search: req.query.search}},function (err, allCampgrounds) {
+            if(err){
+                console.log(err);
+            }else{
+                res.render("campgrounds/index", {campgrounds: allCampgrounds});
+            }
+        });
+    }else{
+        Campground.find(function (err, allCampgrounds) {
+            if(err){
+                console.log(err);
+            }else{
+                res.render("campgrounds/index", {campgrounds: allCampgrounds});
+            }
+        });
+    }
 
 });
 
@@ -109,8 +118,8 @@ router.delete("/:id", middleware.checkCampgroundOwnership ,function (req, res) {
     });
 });
 
-
-
-
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports= router;

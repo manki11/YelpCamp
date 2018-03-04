@@ -20,5 +20,7 @@ var campgroundsSchema = new mongoose.Schema({
     ]
 });
 
+campgroundsSchema.index({name:'text', 'author.username':'text'});
+
 module.exports = mongoose.model("Campground", campgroundsSchema);
 
